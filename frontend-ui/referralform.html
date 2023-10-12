@@ -1,0 +1,172 @@
+<!DOCTYPE html>   
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title> Calendar </title>
+
+<style>
+    #navbar {
+  background: white;
+}
+Body {
+font-family: 'Montserrat', sans-serif;
+  /* background-color: #3e6eb4;   */
+}
+
+</style>
+ <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+       <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+<!--Import JQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+      <!--JavaScript at end of body for optimized loading-->
+      <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="main.js"></script>
+
+  <nav>
+    <div class="nav-wrapper" id="navbar" >
+      <a href="#" class="brand-logo"> <img src="l_ear.png" width="400"</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <body>
+        <li><a href="ref.html" style="color:#3e6eb4">Referrals</a></li>
+        <li><a href="patients.html" style="color:#3e6eb4">Patients</a></li>
+        <li><a href="doctors.html" style="color:#3e6eb4">Doctors</a></li>
+        <li><a href="calendar.html" style="color:#3e6eb4" >Calendar</a></li>
+        </body>
+      </ul>
+    </div>
+  </nav>
+
+<h2 style="color: #3e6eb4; font-family: 'Montserrat'; font-size: 40px;">Referral</h2>
+<button type="button" onclick="acceptReferral()">Accept</button>
+<button type="button" onclick="rejectReferral()">Reject</button>
+
+<input type="text" id="myInput" style="box-shadow:#3e6eb4;" onkeyup="myFunction()">
+<div class="table-container">
+<table id="myTable">
+    <tr class="header" style="...">
+        <th style="...">Referral ID</th>
+        <th style="...">First Name</th>
+        <th style="...">Surname</th>
+        <th style="...">DOB</th>
+        <th style="...">Address 1</th>
+        <th style="...">Address 2</th>
+        <th style="...">Phone No</th>
+        <th style="...">Status</th>
+    </tr>
+    <tbody></tbody>
+</table>
+</div>
+
+<script>
+    function myFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) {
+        var matchFound = false; // Initialize a flag to track matches
+
+        // You can define which columns to filter here
+        var columnsToFilter = [0, 1, 2, 3]; // Adjust the column indices as needed
+
+        for (var j = 0; j < columnsToFilter.length; j++) {
+            var columnIndex = columnsToFilter[j];
+            td = tr[i].getElementsByTagName("td")[columnIndex];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    matchFound = true;
+                    break; // No need to check other columns if a match is found in one column
+                }
+            }
+        }
+
+        if (matchFound) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
+     function getUrlParameter(parameter) {
+       const urlParams = new URLSearchParams(window.location.search);
+       return urlParams.get(parameter);
+     }
+     const referralId = getUrlParameter('value');
+
+        const jsonDataArray = [
+            {
+                "referralId": 1,
+                "firstName": "John",
+                "surname": "Doe",
+                "dob": "1990-01-15",
+                "address1": "123 Main St",
+                "address2": "Apt 4B",
+                "phoneNo": "555-123-4567",
+                "status": "New",
+                "gpSurgeryName": "Greenwood Medical Center",
+                "gpSurgeryAddress": "456 Elm St",
+                "gpSurgeryPhoneNo": "555-987-6543",
+                "lastUpdated": "2023-10-11T14:30:00",
+                "createdTime": "2023-10-11T12:45:00",
+                "caseHistory": {
+                    "description": "Patient has a fever and cough.",
+                    "diagnosis": "Common cold",
+                    "treatment": "Rest, drink fluids, and take over-the-counter medication."
+                },
+                "client": {
+                    "clientId": 101,
+                    "clientName": "Alice Johnson",
+                    "clientAddress": "789 Oak Ave",
+                    "clientPhoneNo": "555-789-1234"
+                }
+            }
+        ];
+
+           // Make a GET request to the API
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const apiUrl = `https://listening-ear-webapp.azurewebsites.net/referral/${referralId}`;
+            fetch(proxyUrl + apiUrl, {
+                method: "GET",
+                mode: 'cors'
+            })
+           .then(response => response.json())
+           .then(data => {
+                // Save the response in the variable
+                let responseData = data;
+                const table = document.getElementById('myTable');
+                const tbody = table.querySelector('tbody');
+
+                const row = document.createElement("tr");
+row.innerHTML = `
+    <td>${responseData.referralId}</td>
+    <td>${responseData.firstName}</td>
+    <td>${responseData.surname}</td>
+    <td>${responseData.dob}</td>
+    <td>${responseData.address1}</td>
+    <td>${responseData.address2}</td>
+    <td>${responseData.phoneNo}</td>
+    <td>${responseData.status}</td>
+`;
+
+// Append the row to the table
+tbody.appendChild(row);
+});
+ </script>
+</body>
+</html>

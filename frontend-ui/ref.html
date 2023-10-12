@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Referrals</title>
+
+
+    <style>
+  
+   #navbar {
+            background: white;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #FBFCFD;
+
+        }
+        #myTable tr:not(.header):hover {
+            background-color: #3abff0;
+            opacity: 50%;
+    }
+    #myInput:focus {
+    outline: none;
+    border: 2px solid #3e6eb4; /* Change 'red' to your desired color */
+}
+
+    </style>
+
+    <!-- Import Google Icon Font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Import materialize.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    
+    <!-- JavaScript at the end of the body for optimized loading -->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper" id="navbar">
+            <a href="#" class="brand-logo"> <img src="l_ear.png" width="400"></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="ref.html" style="color:#3e6eb4">Referrals</a></li>
+                <li><a href="patients.html" style="color:#3e6eb4">Patients</a></li>
+                <li><a href="doctors.html" style="color:#3e6eb4">Doctors</a></li>
+                <li><a href="calendar.html" style="color:#3e6eb4" >Calendar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h2 style="color: #3e6eb4; font-family: 'Montserrat'; font-size: 40px;">Referrals</h2>
+
+    <input type="text" id="myInput" style="box-shadow:#3e6eb4;" onkeyup="myFunction()" placeholder="Search ..." title="Type in a name">
+    <div class="table-container">
+    <table id="myTable">
+        <tr class="header" style="background-color: #3abff0">
+            <th style="width:25%;">Referral ID</th>
+            <th style="width:25%;">First Name</th>
+            <th style="width:25%;">Last Name</th>
+            <th style="width:25%;">Status</th>
+            <th style="width:25%;">Created Time</th>
+        </tr>   
+   
+       <tbody></tbody>
+    
+        <!-- Add more rows as needed -->
+    </table>
+</div>
+
+    <script>
+
+
+
+
+            // Create variables to store the data
+            //let responseData;
+            const sampleData = [
+  {
+    "referralId": "1",
+    "createdTime": "1990-01-15",
+    "firstName": "John",
+    "surname": "Doe",
+    "status": "new"
+  },
+  {
+    "referralId": "2",
+    "createdTime": "1985-05-20",
+    "firstName": "Alice",
+    "surname": "Smith",
+    "status": "approved"
+  },
+  {
+    "referralId": "3",
+    "createdTime": "2023-10-13",
+    "firstName": "Alice",
+    "surname": "Johnson",
+    "status": "rejected"
+  }
+]
+    function myFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) {
+        var matchFound = false; // Initialize a flag to track matches
+
+        // You can define which columns to filter here
+        var columnsToFilter = [0, 1, 2, 3]; // Adjust the column indices as needed
+
+        for (var j = 0; j < columnsToFilter.length; j++) {
+            var columnIndex = columnsToFilter[j];
+            td = tr[i].getElementsByTagName("td")[columnIndex];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    matchFound = true;
+                    break; // No need to check other columns if a match is found in one column
+                }
+            }
+        }
+
+        if (matchFound) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
+
+            // Make a GET request to the API
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const apiUrl = `https://listening-ear-webapp.azurewebsites.net/referral/getAll`;
+
+            //fetch(proxyUrl + apiUrl, {
+            //    method: "GET",
+            //    mode: 'cors'
+            //})
+           //.then(response => response.json())
+           //.then(data => {
+                // Save the response in the variable
+                let responseData = sampleData;
+                const table = document.getElementById('myTable');
+                const tbody = table.querySelector('tbody');
+                responseData.forEach(item =>
+                { const row = document.createElement('tr');
+                 row.classList.add('clickable-row');
+                     row.innerHTML =
+      `
+       <td>${item.referralId}</td>
+       <td>${item.firstName}</td>
+       <td>${item.surname}</td>
+       <td>${item.status}</td>
+       <td>${item.createdTime}</td>
+        `; tbody.appendChild(row);
+         });
+     //});
+
+      // Loop through the JSON data and populate the table
+
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                var clickedValue = $(this).find("td:first").text();
+                window.open('referralform.html?value=' + clickedValue, '_self');
+            });
+        });
+    </script>
+</body>
+</html>

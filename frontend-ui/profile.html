@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cases</title>
+
+
+    <style>
+  
+   #navbar {
+            background: white;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #FBFCFD;
+
+        }
+        #myTable tr:not(.header):hover {
+            background-color: #3abff0;
+            opacity: 50%;
+    }
+    #myInput:focus {
+    outline: none;
+    border: 2px solid #3e6eb4; /* Change 'red' to your desired color */
+}
+
+    </style>
+
+    <!-- Import Google Icon Font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Import materialize.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    
+    <!-- JavaScript at the end of the body for optimized loading -->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper" id="navbar">
+            <div id="result">
+
+            <a href="#" class="brand-logo"> <img src="l_ear.png" width="400"></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="ref.html" style="color:#3e6eb4">Referrals</a></li>
+                <li><a href="patients.html" style="color:#3e6eb4">Patients</a></li>
+                <li><a href="doctors.html" style="color:#3e6eb4">Doctors</a></li>
+                <li><a href="calendar.html" style="color:#3e6eb4" >Calendar</a></li>
+            </ul>
+            </div>
+        </div>
+    </nav>
+
+    <h2 style="color: #3e6eb4; font-family: 'Montserrat'; font-size: 40px;">Cases</h2>
+    <div style="background-color: rgba(58, 191, 240, 0.1); border: 2px solid #3e6eb4; padding: 10px; border-radius: 10px; width: 50%;">
+
+    <h3 style="color: #3e6eb4; font-family: 'Montserrat'; font-size: 15px;">First Name: <span id="userName"></span></h3>
+    <h3 style="color: #3e6eb4; font-family: 'Montserrat'; font-size: 15px;">Last Name: <span id="lastName"></span></h3>
+    <h3 style="color: #3e6eb4; font-family: 'Montserrat'; font-size: 15px;">DOB: <span id="dob"></span> </h3>
+    <h3 style="color: #3e6eb4; font-family: 'Montserrat'; font-size: 15px;">Phone: <span id="phone"></span></h3>
+    <h3 style="color: #3e6eb4; font-family: 'Montserrat'; font-size: 15px;">Address1: <span id="address1"></span></h3>
+    <h3 style="color: #3e6eb4; font-family: 'Montserrat'; font-size: 15px;">Address2: <span id="address2"></span> </h3>
+    </div>
+    <br>
+    <input type="text" id="myInput" style="box-shadow:#3e6eb4;" onkeyup="myFunction()" placeholder="Search ..." title="Type in a name">
+    <div class="table-container">
+    <table id="myTable">
+        <tr class="header" style="background-color: #3abff0">
+            <th style="width:25%;">Case ID</th>
+            <th style="width:25%;">Date</th>
+            <th style="width:25%;">Name</th>
+            <th style="width:25%;">Status</th>
+        </tr>   
+   
+        <tr class="clickable-row">
+            <td>XXXXXX</td>
+            <td>10-23-2023</td>
+            <td>First, Last</td>
+            <td>Status</td>
+        </tr>
+        <tr class="clickable-row">
+            <td>YYYYYY</td>
+            <td>11-23-2023</td>
+            <td>First, Last</td>
+            <td>Status</td>
+        </tr>
+    
+        <!-- Add more rows as needed -->
+    </table>
+</div>
+
+    <script>
+        function myFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) {
+        var matchFound = false; // Initialize a flag to track matches
+
+        // You can define which columns to filter here
+        var columnsToFilter = [0, 1, 2, 3]; // Adjust the column indices as needed
+
+        for (var j = 0; j < columnsToFilter.length; j++) {
+            var columnIndex = columnsToFilter[j];
+            td = tr[i].getElementsByTagName("td")[columnIndex];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    matchFound = true;
+                    break; // No need to check other columns if a match is found in one column
+                }
+            }
+        }
+
+        if (matchFound) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
+
+
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                var clickedValue = $(this).find("td:first").text();
+                window.open('case.html?value=' + clickedValue, '_self');
+            });
+        });
+
+     function getUrlParameter(parameter) {
+       const urlParams = new URLSearchParams(window.location.search);
+       return urlParams.get(parameter);
+     }
+     const clientId = getUrlParameter('value');
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const resultDiv = document.getElementById("result");
+            const userNameSpan = document.getElementById("userName");
+            const lastNameSpan = document.getElementById("lastName");
+            const dobSpan = document.getElementById("dob");
+            const phoneSpan = document.getElementById("phone");
+            const addressSpan1 = document.getElementById("address1");
+            const addressSpan2 = document.getElementById("address2");
+
+        const sampleData = [
+    {
+        "clientId": 2,
+        "firstName": "Alice",
+        "surname": "Smith",
+        "dob": "1985-05-20",
+        "address1": "456 Elm St",
+        "address2": "Apt 7C",
+        "phoneNo": "555-9876",
+        "caseHistory": "Case History 1",
+        "lastUpdated": "2023-10-14 09:45:00"
+    },
+    {
+        "clientId": 3,
+        "firstName": "Bob",
+        "surname": "Johnson",
+        "dob": "1988-11-08",
+        "address1": "789 Oak St",
+        "address2": "Apt 12D",
+        "phoneNo": "555-8765",
+        "caseHistory": "Case History 2",
+        "lastUpdated": "2023-10-13 14:15:00"
+    },
+    {
+        "clientId": 4,
+        "firstName": "Eva",
+        "surname": "Brown",
+        "dob": "1992-03-25",
+        "address1": "101 Cedar St",
+        "address2": "Apt 3A",
+        "phoneNo": "555-5678",
+        "caseHistory": "Case History 3",
+        "lastUpdated": "2023-10-12 11:20:00"
+    },
+    {
+        "clientId": 5,
+        "firstName": "Michael",
+        "surname": "Lee",
+        "dob": "1982-08-10",
+        "address1": "202 Pine St",
+        "address2": "Apt 9B",
+        "phoneNo": "555-1122",
+        "caseHistory": "Case History 4",
+        "lastUpdated": "2023-10-11 15:50:00"
+    },
+    {
+        "clientId": 6,
+        "firstName": "Sarah",
+        "surname": "Adams",
+        "dob": "1995-12-02",
+        "address1": "303 Cedar St",
+        "address2": "Apt 15C",
+        "phoneNo": "555-3344",
+        "caseHistory": "Case History 5",
+        "lastUpdated": "2023-10-10 13:10:00"
+    }
+]
+
+            // Create variables to store the data
+            let responseData;
+
+            // Make a GET request to the API
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const apiUrl = `https://listening-ear-webapp.azurewebsites.net/referral/client/${clientId}`;
+            //const apiUrl = `https://listening-ear-webapp.azurewebsites.net/referral/client/10`;
+
+            fetch(proxyUrl + apiUrl, {
+                method: "GET",
+                mode: 'cors'
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Save the response in the variable
+                responseData = data
+               
+                userNameSpan.textContent = responseData.firstName;
+                lastNameSpan.textContent = responseData.surname;
+                dobSpan.textContent = responseData.dob;
+                addressSpan1.textContent = responseData.address1;
+                phoneSpan.textContent = responseData.phoneNo;
+                addressSpan2.textContent = responseData.address2;
+
+           })
+       
+        });
+   
+    </script>
+</body>
+</html>

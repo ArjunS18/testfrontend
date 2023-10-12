@@ -1,0 +1,161 @@
+<!DOCTYPE html>   
+<html>   
+<head>  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">  
+<title> Calendar </title>  
+
+<style>
+    #navbar {
+  background: white;
+}
+Body {  
+font-family: 'Montserrat', sans-serif;
+  /* background-color: #3e6eb4;   */
+}  
+details {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 0.5em 0.5em 0;
+}
+
+summary {
+  font-weight: bold;
+  margin: -0.5em -0.5em 0;
+  padding: 0.5em;
+}
+
+details[open] {
+  padding: 0.5em;
+}
+
+details[open] summary {
+  border-bottom: 1px solid #aaa;
+  margin-bottom: 0.5em;
+}
+
+        /* Additional CSS for responsive summary tab */
+        summary {
+            cursor: pointer; /* Add a pointer cursor to indicate it's clickable */
+            user-select: none; /* Disable text selection */
+            background-color: #3abff0; /* Set the background color */
+            color: white; /* Text color */
+            padding: 0.5em; /* Add padding for better clickability */
+        }
+
+        summary::-webkit-details-marker {
+            display: none; /* Hide the default marker (arrow) */
+        }
+
+        details[open] summary {
+            background-color: #3e6eb4; /* Change background color when open */
+        }
+
+
+ 
+</style>
+ <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+       <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+   
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ 
+ 
+<!--Import JQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+      <!--JavaScript at end of body for optimized loading-->
+      <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="main.js"></script>
+
+  <nav>
+    <div class="nav-wrapper" id="navbar" >
+      <a href="#" class="brand-logo"> <img src="l_ear.png" width="400"</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <body> 
+        <li><a href="ref.html" style="color:#3e6eb4">Referrals</a></li>
+        <li><a href="patients.html" style="color:#3e6eb4">Patients</a></li>
+        <li><a href="doctors.html" style="color:#3e6eb4">Doctors</a></li>
+        <li><a href="calendar.html" style="color:#3e6eb4" >Calendar</a></li>
+        </body>
+      </ul>
+    </div>
+  </nav>
+
+  <details>
+    <summary>Appointments</summary>
+    <div>Upcoming Appointments</div>
+    <div class="table-container">
+        <table id="myTable">
+            <tr class="header" style="background-color: #3abff0">
+                <th style="width:25%;">Date</th>
+                <th style="width:25%;">Doctor</th>
+            </tr>   
+       
+            <tr >
+                <td>10-23-2023</td>
+                <td>First, Last</td>
+            </tr>
+            <tr >
+                <td>11-23-2023</td>
+                <td>First, Last</td>
+            </tr>
+        
+            <!-- Add more rows as needed -->
+        </table>
+    </div>
+    <br>
+    Previous Appointments
+    <div class="table-container">
+        <table id="myTable">
+            <tr class="header" style="background-color: #3abff0">
+                <th style="width:25%;">Date</th>
+                <th style="width:25%;">Doctor</th>
+            </tr>   
+       
+            <tr >
+                <td>10-23-2022</td>
+                <td>First, Last</td>
+            </tr>
+            <tr >
+                <td>11-23-202</td>
+                <td>First, Last</td>
+            </tr>
+        
+            <!-- Add more rows as needed -->
+        </table>
+    </div>
+  </details>
+  <details>
+    <summary>Documents</summary>
+    <div class="table-container">
+        <table id="myTable">
+            <tr class="header" style="background-color: #3abff0">
+                <th style="width:25%;">Date Uploaded</th>
+                <th style="width:25%;">Name</th>
+                <th style="width:25%;">Document</th>
+            </tr>   
+       
+            <tr >
+                <td>10-23-2022</td>
+                <td>First, Last</td>
+                <td>Document</td>
+            </tr>
+            <tr >
+                <td>11-23-202</td>
+                <td>First, Last</td>
+                <td>Document</td>
+            </tr>
+        
+            <!-- Add more rows as needed -->
+        </table>
+    </div>
+    <br>
+    <div> <button>Upload Document</button></div>
+  </details>

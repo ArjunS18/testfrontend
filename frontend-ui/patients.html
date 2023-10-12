@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Patients</title>
+
+    <style>
+        #navbar {
+            background: white;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #FBFCFD;
+        }
+        #myTable tr:not(.header):hover {
+            background-color: #3abff0;
+    opacity: 50%;
+    }
+    #myInput:focus {
+    outline: none;
+    border: 2px solid #3e6eb4; /* Change 'red' to your desired color */
+}
+
+    </style>
+
+    <!-- Import Google Icon Font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Import materialize.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    
+    <!-- JavaScript at the end of the body for optimized loading -->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper" id="navbar">
+            <a href="#" class="brand-logo"> <img src="l_ear.png" width="400"></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="ref.html" style="color:#3e6eb4">Referrals</a></li>
+                <li><a href="patients.html" style="color:#3e6eb4">Patients</a></li>
+                <li><a href="doctors.html" style="color:#3e6eb4">Doctors</a></li>
+                <li><a href="calendar.html" style="color:#3e6eb4" >Calendar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h2 style="color: #3e6eb4; font-family: 'Montserrat'; font-size: 40px;">Patients</h2>
+
+    <input type="text" id="myInput" style="box-shadow:#3e6eb4;" onkeyup="myFunction()" placeholder="Search ..." title="Type in a name">
+    <div class="table-container">
+    <table id="myTable">
+        <tr class="header" style="background-color: #3abff0">
+            <th style="width:33%;">Id</th>
+            <th style="width:33%;">First Name</th>
+            <th style="width:33%;">Last Name</th>
+            <th style="width:33%;">DOB</th>
+        </tr>
+        <!-- Add more rows as needed -->
+    </table>
+    </div>
+    </div>
+    <script>
+        const sampleData = [
+    {
+        "clientId": 2,
+        "firstName": "Alice",
+        "surname": "Smith",
+        "dob": "1985-05-20",
+        "address1": "456 Elm St",
+        "address2": "Apt 7C",
+        "phoneNo": "555-9876",
+        "caseHistory": "Case History 1",
+        "lastUpdated": "2023-10-14 09:45:00"
+    },
+    {
+        "clientId": 3,
+        "firstName": "Bob",
+        "surname": "Johnson",
+        "dob": "1988-11-08",
+        "address1": "789 Oak St",
+        "address2": "Apt 12D",
+        "phoneNo": "555-8765",
+        "caseHistory": "Case History 2",
+        "lastUpdated": "2023-10-13 14:15:00"
+    },
+    {
+        "clientId": 4,
+        "firstName": "Eva",
+        "surname": "Brown",
+        "dob": "1992-03-25",
+        "address1": "101 Cedar St",
+        "address2": "Apt 3A",
+        "phoneNo": "555-5678",
+        "caseHistory": "Case History 3",
+        "lastUpdated": "2023-10-12 11:20:00"
+    },
+    {
+        "clientId": 5,
+        "firstName": "Michael",
+        "surname": "Lee",
+        "dob": "1982-08-10",
+        "address1": "202 Pine St",
+        "address2": "Apt 9B",
+        "phoneNo": "555-1122",
+        "caseHistory": "Case History 4",
+        "lastUpdated": "2023-10-11 15:50:00"
+    },
+    {
+        "clientId": 6,
+        "firstName": "Sarah",
+        "surname": "Adams",
+        "dob": "1995-12-02",
+        "address1": "303 Cedar St",
+        "address2": "Apt 15C",
+        "phoneNo": "555-3344",
+        "caseHistory": "Case History 5",
+        "lastUpdated": "2023-10-10 13:10:00"
+    }
+]
+
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+// Get all clients
+
+                const table = document.getElementById('myTable');
+                const tbody = table.querySelector('tbody');
+                sampleData.forEach(item =>
+                { const row = document.createElement('tr');
+                 row.classList.add('clickable-row');
+                     row.innerHTML =
+      `
+       <td>${item.clientId}</td>
+       <td>${item.firstName}</td>
+       <td>${item.surname}</td>
+       <td>${item.dob}</td>
+        `; tbody.appendChild(row);
+         });
+
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                var clickedValue = $(this).find("td:first").text();
+                window.open('profile.html?value=' + clickedValue, '_self');
+            });
+        });
+    </script>
+</body>
+</html>

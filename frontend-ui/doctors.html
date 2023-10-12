@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Doctors</title>
+
+    <style>
+        #navbar {
+            background: white;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #FBFCFD;
+        }
+        #myTable tr:not(.header):hover {
+    background-color: #3abff0;
+    opacity: 50%;
+    }
+    #myInput:focus {
+    outline: none;
+    border: 2px solid #3e6eb4; /* Change 'red' to your desired color */
+}
+
+    </style>
+
+    <!-- Import Google Icon Font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Import materialize.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    
+    <!-- JavaScript at the end of the body for optimized loading -->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper" id="navbar">
+            <a href="#" class="brand-logo"> <img src="l_ear.png" width="400"></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="ref.html" style="color:#3e6eb4">Referrals</a></li>
+                <li><a href="patients.html" style="color:#3e6eb4">Patients</a></li>
+                <li><a href="doctors.html" style="color:#3e6eb4">Doctors</a></li>
+                <li><a href="calendar.html" style="color:#3e6eb4" >Calendar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h2 style="color: #3e6eb4; font-family: 'Montserrat'; font-size: 40px;">Doctors</h2>
+
+    <input type="text" id="myInput" style="box-shadow:#3e6eb4;" onkeyup="myFunction()" placeholder="Search..." title="Type in a name">
+
+    <table id="myTable">
+        <tr class="header" style="background-color: #3abff0">
+            <th style="width:33%;">ID</th>
+            <th style="width:33%;">First Name</th>
+            <th style="width:33%;">Last Name</th>
+        </tr>
+        <!-- Add more rows as needed -->
+        <tbody></tbody>
+    </table>
+
+    <script>
+        const doctors = [
+         { "id": 1, "firstName": "Dr. John", "lastName": "Doe" },
+         { "id": 2, "firstName": "Dr. Jane", "lastName": "Smith" },
+         { "id": 3, "firstName": "Dr. Alice", "lastName": "Johnson" },
+         { "id": 4, "firstName": "Dr. Bob", "lastName": "Anderson" }]
+
+         const table = document.getElementById('myTable');
+         const tbody = table.querySelector('tbody');
+         doctors.forEach(item =>
+         { const row = document.createElement('tr');
+           row.innerHTML =
+           `
+           <td>${item.Id}</td>
+           <td>${item.firstName}</td>
+           <td>${item.lastName}</td>
+           `; tbody.appendChild(row);
+         });
+
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        jQuery(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                var clickedValue = $(this).find("td:first").text();
+                window.open('profile.html?value=' + clickedValue, '_self');
+            });
+        });
+    </script>
+</body>
+</html>

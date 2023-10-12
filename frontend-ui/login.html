@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login Page</title>
+    <style>
+        Body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        button {
+            background-color: #3e6eb4;
+            width: 50%;
+            color: #fff;
+            padding: 15px;
+            margin: 10px 0px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            opacity: 0.7;
+        }
+        .container {
+            padding: 10px;
+            width: 50%;
+            background-color: #6dc6da;
+            border-radius: 25px;
+        }
+        input[type=text], input[type=password] {
+            width: 100%;
+            margin: 8px 0;
+            padding: 12px 20px;
+            display: inline-block;
+            border: none;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1> <img src="l_ear.png" width="500"> </h1>
+    </center>
+    <form id="login-form">
+        <center>
+            <div class="container">
+                <label>Username</label>
+                <input type="text" placeholder="Enter Username" name="username">
+                <label>Password</label>
+                <input type="password" placeholder="Enter Password" name="password">
+                <button type="submit">Login</button>
+            </div>
+        </center>
+    </form>
+    <div id="result"></div>
+    <script>
+     document.addEventListener("DOMContentLoaded", function () {
+            const loginForm = document.getElementById("login-form");
+            const resultDiv = document.getElementById("result");
+
+            loginForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                const username = loginForm.querySelector("input[name='username']").value;
+                const password = loginForm.querySelector("input[name='password']").value;
+
+                const data = {
+                    username: username,
+                    password: password
+                };
+
+                const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+                const apiUrl = 'https://listening-ear-webapp.azurewebsites.net/users';
+
+                fetch(proxyUrl + apiUrl, {
+                    method: "GET", // Use GET request
+                    mode: 'cors'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        resultDiv.innerHTML = `<h2>Login Successful</h2>`;
+                        // Display the response from the GET request here
+                        resultDiv.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    } else {
+                        resultDiv.innerHTML = `<h2>Login Failed: ${data.message}</h2>`;
+                    }
+                })
+                .catch(error => {
+                    resultDiv.innerHTML = `<h2>Login Failed: ${error.message}</h2>`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
